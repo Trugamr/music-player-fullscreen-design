@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Music UI</title>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="overlay" id="grad-overlay"></div>
+        <div class="items-wrapper">
+            <img src="" alt="" id="artwork">
+            <div class="rightSide">
+                <p id="title"></p>
+                <p id="artist"></p>
+                <div id="controls">
+                    <img src="resources/icons/shuffle.svg">
+                    <img src="resources/icons/previous.svg">
+                    <img src="resources/icons/play-pause.svg">
+                    <img src="resources/icons/next.svg">
+                    <img src="resources/icons/repeat.svg">
+                </div>
+                <div id="seekbar">
+                    <progress id="progress-bar" value="70" max="100" onclick="seek(event);">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+    <script src="js/Vibrant.js"></script>
+</body>
+</html>

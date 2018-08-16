@@ -1,0 +1,115 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+ .container {
+     width: 100vw !important;
+     height: 100vh !important;
+     background-size: cover !important;
+     background-position: center !important;
+ }
+
+ .overlay {
+     position: absolute;
+     top: 0;
+     right: 0;
+     bottom: 0;
+     left: 0;
+ }
+
+ .items-wrapper {
+     position: absolute;
+     width: max-content;
+     height: min-content;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     margin: auto;
+     display: grid;
+     grid-template-columns: auto auto;
+     grid-column-gap: 53px;
+ }
+
+ #artwork {
+     height: 300px !important;
+     width: 300px !important;
+ }
+
+ .rightSide {
+     width: 640px;
+ }
+
+ #title , #artist {
+    margin: 0px;
+    padding: 0px;
+ }
+
+ #title {
+     color: white;
+     font-size: 65px;
+     padding-top: 14px;
+     font-family: Montserrat;
+     font-weight: bold;
+ }
+
+ #artist {
+     font-size: 40px;
+     color: rgba(240, 240, 240, 0.85);
+     font-family: 'Segoe UI';
+ }
+
+ #controls {
+     margin-top:31px; 
+ }
+
+ #controls img{
+     display: inline-block;    
+ }
+
+ #controls img:first-child {
+     margin-right: 35px;
+ }
+
+ #controls img:last-child{
+     margin-left: 35px;
+ }
+
+ #controls img:first-child, #controls img:last-child {
+    height: 28px;
+    line-height: 35px;
+ }
+
+ #controls img:nth-child(2), #controls img:nth-child(4) {
+     height: 30px;
+     line-height: 35px;
+ }
+
+ #controls img:nth-child(3) {
+     height: 35px;
+     margin: 0px 33px;
+ }
+
+ #seekar {
+     width: 640px;
+ }
+
+ #seekbar progress {
+    -webkit-appearance: none !important;
+    border: none !important;
+    height: 8px;
+    width: 640px;
+    border-radius: 8px;
+ }
+
+ #seekbar progress::-webkit-progress-bar {
+    background: transparent;
+}
+
+progress::-webkit-progress-value {
+    background: #fff;
+    border-radius: 8px;
+    height: 10px;
+    margin-top: -1.5px;
+}
