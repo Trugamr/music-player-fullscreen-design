@@ -23,10 +23,12 @@
                     <img src="resources/icons/repeat.svg">
                 </div>
                 <div id="seekbar">
-                    <progress id="progress-bar" value="70" max="100" onclick="seek(event);">
+                    <progress id="progress-bar" value="70" max="100" min=10 onclick="seek(event);"></progress>
+                    <p id="time-elapsed">3:24</p> <p id="duration">4:20</p>
                 </div>
             </div>
         </div>
+        <div id="testing-btn">next</div>
     </div>
     <script src="js/main.js"></script>
     <script src="js/Vibrant.js"></script>
