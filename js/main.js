@@ -67,18 +67,52 @@ this.artwork.addEventListener('load', function() {
 });
 
 
+//search music function
+
+function searchMusic() {
+    var searchString = document.getElementById('search').value;
+    var baseSearchUrl = 'https://musicbrainz.org/ws/2/';
+    var releaseQuery = 'release/?query=release:';
+    var responseFormat = '&fmt=json';
+
+    //clearing result box
+    var resultBox = document.getElementById('results');
+    resultBox.innerHTML = '';
+
+    var searchRequest = new XMLHttpRequest();
+    searchRequest.open('GET', baseSearchUrl + releaseQuery + searchString.replace(" ", " AND ") + responseFormat);
+    searchRequest.onload = function() {
+        if(searchRequest.status == 200) {
+            var respData = JSON.parse(searchRequest.responseText).releases;
+        
+            respData.forEach(release =>
+                resultBox.innerHTML += `
+                <div class="card" onclick="getAndUpdateInfo(event);" data-release_id="`+ release.id +`" data-title="`+ release.title +`" data-artist="`+ release["artist-credit"][0].artist.name +`" data-artist_id="` + release["artist-credit"][0].artist.name + `" >` + release.title + ` by ` + release["artist-credit"][0].artist.name + `</div>`
+            );
+            
+            console.log(respData);
+        }
+    }
+    searchRequest.send();
+}
+
+
+
+/*
+//old dirty parsing xml
 //search music
 function searchMusic() {
     var searchString = document.getElementById('search').value;
     var baseSearchUrl = 'https://musicbrainz.org/ws/2/';
     var releaseQuery = 'release/?query=release:';
+    var responseFormat = '&fmt=json';
     //emptying every search button click
     document.getElementById('results').innerHTML = "";
 
     var request = new XMLHttpRequest();
-    request.open('GET', baseSearchUrl + releaseQuery + searchString);
+    request.open('GET', baseSearchUrl + releaseQuery + searchString + responseFormat);
     request.onload = function() {
-        var respData = request.responseXML;
+        var respData = JSON.parse(request.responseText);
         var releases =  respData.getElementsByTagName('release');
         var artists =  respData.querySelectorAll('artist-credit > name-credit > artist > name');
         var artist_ids = respData.querySelectorAll('artist-credit > name-credit > artist');   
@@ -113,6 +147,7 @@ function searchMusic() {
     }
     request.send();
 }
+*/
 
 //extracting id and other info by setting as data-attribute
 function getAndUpdateInfo(e) {
@@ -149,8 +184,8 @@ function getArtwork(rel_id) {
             artwork.src = ('data:image/png;base64,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');
         } else {
             var artworkData = JSON.parse(artworkRequest.responseText);
-            console.log(artworkData.images[0].thumbnails.large);            
             artwork.src = artworkData.images[0].thumbnails.large;
+            console.log(artworkData.images[0].thumbnails.large);            
         }
         
     }
