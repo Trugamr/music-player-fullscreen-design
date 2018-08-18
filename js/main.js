@@ -19,32 +19,51 @@ function rgbToAlpha(rgbColor) {
     return rgbaColor;
 }
 
-//changing gradient color
-overlay.style = "background: linear-gradient(rgba(0,0,0,0.5) , rgba(30,30,30,0.66)," + rgbToAlpha(lightVibrantColor) + ")";
-
 //changing background artist image
 background.style = 'background: url(\' ' + backgroundImageUrl + ' \'); ';
 
 //changing artwork
 artwork.src = artworkUrl;
-//adding displaced colored background to artowkr using box-shadow
-artwork.style = 'box-shadow: 7px 7px 0px 0px rgba(0, 0, 0, 0.16), 14px 14px 0px ' + lightVibrantColor + ';';
 
 //changing title and artist
 title.innerText = musicTitle;
 artist.innerText = musicArtist;
-
-//adding 3d effct/multiple shadows to music controls
-controls.style = 'filter: drop-shadow(1px 1px 0px ' + lightVibrantColor + ') drop-shadow(2px 2px 0px ' + lightVibrantColor + ');' //drop-shadow(3px 3px 0px ' + lightVibrantColor + ');';
-
-//changing seebar bg color
-seekbar.style.background = lightVibrantColor;
 
 //seeking to 
 function seek(e) {
     this.seekbar.value = e.offsetX/e.target.clientWidth * 100; 
     // console.log(e);
 }
+
+
+//updating vibrant colors
+function updateColors(extractedColors) {
+    //copying Vibrant color values array
+    var rgbValues = extractedColors.Vibrant;
+    //rgb values to usable rgb color string
+    var rgbColor = 'rgb(' + rgbValues.rgb[0] + ', ' + rgbValues.rgb[1] + ', ' + rgbValues.rgb[2] + ')'
+   
+    //changing gradient color
+    overlay.style = "background: linear-gradient(rgba(0,0,0,0.5) , rgba(30,30,30,0.66)," + rgbToAlpha(rgbColor) + ")";
+    //adding 3d effct/multiple shadows to music controls
+    controls.style = 'filter: drop-shadow(1px 1px 0px ' + rgbColor + ') drop-shadow(2px 2px 0px ' + rgbColor + ');' //drop-shadow(3px 3px 0px ' + testing[index].color + ');';
+    //changing seebar bg color
+    seekbar.style.background = rgbColor;
+    //adding displaced colored background to artowkr using box-shadow
+    artwork.style = 'box-shadow: 7px 7px 0px 0px rgba(0, 0, 0, 0.16), 14px 14px 0px ' + rgbColor + ';';
+}
+
+//extracting vibrant color from image ob load
+this.artwork.addEventListener('load', function() {
+    var artwork = document.getElementById('artwork');
+    var vibrant = new Vibrant(artwork);
+    var swatches = vibrant.swatches();
+    updateColors(swatches);
+    for (var swatch in swatches)
+        if (swatches.hasOwnProperty(swatch) && swatches[swatch])
+            console.log(swatch, swatches[swatch].getHex())
+    // console.log(swatches);        
+});
 
 //preview-testing function
 var testing = [
@@ -90,25 +109,15 @@ document.getElementById('testing-btn').addEventListener('click', function() {
         index = 0;
     }
     
-    //changing gradient color
-    overlay.style = "background: linear-gradient(rgba(0,0,0,0.5) , rgba(30,30,30,0.66)," + rgbToAlpha(testing[index].color) + ")";
-
     //changing background artist image
     background.style = 'background: url(\' ' + testing[index].bg + ' \'); ';
 
     //changing artwork
     artwork.src = testing[index].art;
-    //adding displaced colored background to artowkr using box-shadow
-    artwork.style = 'box-shadow: 7px 7px 0px 0px rgba(0, 0, 0, 0.16), 14px 14px 0px ' + testing[index].color + ';';
-
+    
     //changing title and artist
     title.innerText = testing[index].title;
     artist.innerText = testing[index].artist;
-
-    //adding 3d effct/multiple shadows to music controls
-    controls.style = 'filter: drop-shadow(1px 1px 0px ' + testing[index].color + ') drop-shadow(2px 2px 0px ' + testing[index].color + ');' //drop-shadow(3px 3px 0px ' + testing[index].color + ');';
-
-    //changing seebar bg color
-    seekbar.style.background = testing[index].color;
+    
     index++;
 });
