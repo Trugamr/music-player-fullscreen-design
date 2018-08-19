@@ -29,17 +29,21 @@ artwork.src = artworkUrl;
 title.innerText = musicTitle;
 artist.innerText = musicArtist;
 
-//seeking to 
-function seek(e) {
-    this.seekbar.value = e.offsetX/e.target.clientWidth * 100; 
-    // console.log(e);
-}
+// //seeking to SHIFTED to yt-embed temporarily
+// function seek(e) {
+//     this.seekbar.value = e.offsetX/e.target.clientWidth * 100; 
+//     // console.log(e);
+// }
 
 
 //updating vibrant colors
 function updateColors(extractedColors) {
     //copying Vibrant color values array
-    var rgbValues = extractedColors.Vibrant;
+    if(extractedColors.Vibrant == undefined) {
+        var rgbValues = extractedColors.LightVibrant;
+    } else {
+        var rgbValues = extractedColors.Vibrant;
+    }
     //rgb values to usable rgb color string
     var rgbColor = 'rgb(' + rgbValues.rgb[0] + ', ' + rgbValues.rgb[1] + ', ' + rgbValues.rgb[2] + ')'
    
@@ -59,11 +63,11 @@ this.artwork.addEventListener('load', function() {
     var artwork = document.getElementById('artwork');    
     var vibrant = new Vibrant(artwork);
     var swatches = vibrant.swatches();
+    console.log(swatches);        
     updateColors(swatches);
     // for (var swatch in swatches)
     //     if (swatches.hasOwnProperty(swatch) && swatches[swatch])
     //         console.log(swatch, swatches[swatch].getHex())
-    // console.log(swatches);        
 });
 
 
@@ -87,8 +91,7 @@ function searchMusic() {
         
             respData.forEach(release =>
                 resultBox.innerHTML += `
-                <div class="card" onclick="getAndUpdateInfo(event);" data-release_id="`+ release.id +`" data-title="`+ release.title +`" data-artist="`+ release["artist-credit"][0].artist.name +`" data-artist_id="` + release["artist-credit"][0].artist.name + `" >` + release.title + ` by ` + release["artist-credit"][0].artist.name + `</div>`
-            );
+                <div class="card" onclick="getAndUpdateInfo(event);" data-release_id="`+ release.id +`" data-title="`+ release.title +`" data-artist="`+ release["artist-credit"][0].artist.name +`" data-artist_id="` + release["artist-credit"][0].artist.id + `" >` + release.title + ` by ` + release["artist-credit"][0].artist.name + `</div>`);
             
             console.log(respData);
         }
@@ -169,29 +172,55 @@ function getAndUpdateInfo(e) {
     //updating artwork
     getArtwork(data.release_id);
 
+    //updating background
+    getArtistBackground(data.artist_id);
+
     console.log(data);
 }
 
 function getArtwork(rel_id) {
-    var artworkData ;
     var artwork = document.getElementById('artwork');
     var artworkRequest = new XMLHttpRequest();
     artworkRequest.open('GET', 'https://coverartarchive.org/release/' + rel_id);
     artworkRequest.onload = function() {
-        console.log(this.status);
+        console.log('Artwork Status', this.status);
         if(this.status == 404) {
             //return sad face
-            artwork.src = ('data:image/png;base64,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');
+            artwork.src = ('../resources/images/art_0.jpg');
         } else {
             var artworkData = JSON.parse(artworkRequest.responseText);
             artwork.src = artworkData.images[0].thumbnails.large;
-            console.log(artworkData.images[0].thumbnails.large);            
+            // console.log(artworkData.images[0].thumbnails.large);            
         }
         
     }
     artworkRequest.send();
 }
 
+
+function getArtistBackground(artistId) {
+    baseUrl = 'https://webservice.fanart.tv/v3/music/';
+    dummyApiKey = '9a7123364e89108c7b1c1d55ccf85a6a';
+    var backgroundRequest = new XMLHttpRequest();
+    backgroundRequest.open('GET', baseUrl + artistId + '?api_key=' + dummyApiKey);
+    backgroundRequest.onload = function() {
+        console.log('Background Status', this.status);
+        if(this.status == 404) {
+            //changing background artist image
+            background.style = 'background: url(\' ' + '../resources/images/backdrop_0.jpg' + ' \'); ';
+        } else {
+            respData = JSON.parse(this.responseText);
+            if(respData.artistbackground == undefined) {
+                background.style = 'background: url(\' ' + '../resources/images/backdrop_0.jpg' + ' \'); ';
+            } else {
+                randomIndex = Math.floor(Math.random() * respData.artistbackground.length);
+                background.style = 'background: url(\' ' + respData.artistbackground[randomIndex].url + ' \'); ';
+            }
+            console.log(respData);
+        }
+    }
+    backgroundRequest.send();
+}
 
 
 
