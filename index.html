@@ -19,9 +19,9 @@
                 <div id="controls">
                     <img src="resources/icons/shuffle.svg">
                     <img src="resources/icons/previous.svg">
-                    <svg fill="#ffffff" id="play-pause-btn" width="35px" viewBox="10 10 15 15" xmlns="http://www.w3.org/2000/svg">
-                        <path id= "play-btn" data-state="playing" d="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26" />
-                        <path opacity=0 id="pause-btn"  data-state="paused"  d="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28" />
+                    <svg fill="#ffffff" id="play-pause-btn" width="35px" viewBox="10 10 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <path opacity=0 id="pause-btn" d="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26" />
+                        <path id="play-btn"  d="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28" />
                     </svg>                    
                     <!-- <img src="resources/icons/play-pause.svg"> -->
                     <img src="resources/icons/next.svg">
@@ -29,7 +29,7 @@
                 </div>
                 <div id="seekbar">
                     <progress id="progress-bar" value="70" max="100" onclick="seek(event);"></progress>
-                    <p id="time-elapsed">00:00</p> <p id="duration">3:20</p>
+                    <p id="time-elapsed">03:24</p> <p id="duration">4:20</p>
                 </div>
             </div>
         </div>
@@ -45,14 +45,12 @@
                 <input type="text" id="search" placeholder="search">
                 <i class="fa fa-search" id="search-icon" onclick="searchMusic()"></i>
             </div>
-            <div id="player"></div>
             <div class="results" id="results">
             </div>
         </div>
     </div>
-    <script src="js/main.js"></script>
     <script src="js/snap.svg-min.js"></script>
-    <script src="js/yt-embed.js"></script>
     <script src="js/Vibrant.js"></script>
+    <script src="js/main.js"></script>    
 </body>
 </html>

@@ -117,6 +117,7 @@ line-height: 35px;
 
 #play-pause-btn {
     margin: 0px 33px -2px 33px;
+    cursor: pointer;
 }
 
 #seekbar {
@@ -183,13 +184,14 @@ cursor: pointer;
 #sidebar {
     height: 100vh;
     width: 220px;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.95);
     position: fixed;
     right: 0;
     transform: translateX(260px);
     transition: ease transform 0.25s;
     padding: 10px;
     overflow-y: auto;
+    box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.1);
 }
 
 .show {
@@ -199,24 +201,39 @@ cursor: pointer;
 #back-btn {
     cursor: pointer;
     font-size: 20px;
-    margin-top: 10px;
     color: #505050;
+    width: 220px;
+    margin-left: -10px;
+    padding: 10px 10px;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 1);
 }
 
 .searchBox {
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
+    height: 40px;
+    width: 210px;
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.05);
+    margin-top: 10px;
 }
 
 .searchBox input {
-    width: 140px;
+    width: 150px;
+    height: 30px;
+    margin: 0px;
     margin-right: 10px;
     padding: 5px 10px;
+    border: none;
+    font-size: 16px;
+    font-family: 'Montserrat';
+    float: left;
+}
+
+.searchBox input:focus {
+    outline: none;
 }
 
 .card {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.05);
     padding: 20px;
     margin-top: 10px;
     font-family: Montserrat;
@@ -224,5 +241,14 @@ cursor: pointer;
 }
 
 #search-icon {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background-color: white;
+    font-size: 20px;
+    text-align: center;
+    line-height: 40px;
+    float: left;
+    margin-left: -16px;
     cursor: pointer;
 }

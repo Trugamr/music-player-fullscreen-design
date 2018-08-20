@@ -29,11 +29,11 @@ artwork.src = artworkUrl;
 title.innerText = musicTitle;
 artist.innerText = musicArtist;
 
-// //seeking to SHIFTED to yt-embed temporarily
-// function seek(e) {
-//     this.seekbar.value = e.offsetX/e.target.clientWidth * 100; 
-//     // console.log(e);
-// }
+//seeking
+function seek(e) {
+    this.seekbar.value = e.offsetX/e.target.clientWidth * 100; 
+    // console.log(e);
+}
 
 
 //updating vibrant colors
@@ -223,17 +223,34 @@ function getArtistBackground(artistId) {
 }
 
 
+//morphing play pause
+var svg = document.getElementById("play-pause-btn");
+var s = Snap(svg);
 
+var playBtn = Snap.select('#play-btn');
+var pauseBtn = Snap.select('#pause-btn');
 
+var playBtnPoints = playBtn.node.getAttribute('d');
+var pauseBtnPoints = pauseBtn.node.getAttribute('d');
 
+var toPause = function(){
+    playBtn.animate({ d: pauseBtnPoints }, 200);  
+}
 
+var toPlay = function(){
+    playBtn.animate({ d: playBtnPoints }, 200);  
+}
 
-
-
-
-
-
-
+var playing = false;
+document.getElementById('play-pause-btn').addEventListener('click', function () {
+    if(playing) {
+        toPlay();
+        playing = false;
+    } else {
+        toPause();
+        playing = true;
+    }
+})
 
 
 
@@ -285,11 +302,11 @@ var testing = [
         artist: 'Kehlani'
     },
     {
-        bg: 'https://earmilk.com/wp-content/uploads/2017/11/dj-snakejpg-950x451.jpg',
-        art: 'https://i1.sndcdn.com/artworks-000243919916-gyq18i-t500x500.jpg',
+        bg: '../resources/images/backdrop_8.jpg',
+        art: '../resources/images/art_8.jpg',
         color: 'rgb(255, 255, 255)',
-        title: 'A Different Way',
-        artist: 'DJ Snake'
+        title: 'Andromeda',
+        artist: 'Gorillaz'
     }
 ]
 var index = 4;
